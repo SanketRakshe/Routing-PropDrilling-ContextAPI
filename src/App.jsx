@@ -3,12 +3,12 @@
 // import { Dashboard } from "./components/Dashboard";
 // import { useNavigate } from "react-router-dom";
 
-import React, { Suspense } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+// import React, { Suspense } from 'react';
+// import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
-// Lazy load the components
-const Home = React.lazy(() => import('./components/Home'));
-const About = React.lazy(() => import('./components/About'));
+// // Lazy load the components
+// const Home = React.lazy(() => import('./components/Home'));
+// const About = React.lazy(() => import('./components/About'));
 
 
 // Routing................................................................
@@ -55,28 +55,68 @@ const About = React.lazy(() => import('./components/About'));
 
 
 
-function App() {
-  return (
-    <Router>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-        </ul>
-      </nav>
+// function App() {
+//   return (
+//     <Router>
+//       <nav>
+//         <ul>
+//           <li>
+//             <Link to="/">Home</Link>
+//           </li>
+//           <li>
+//             <Link to="/about">About</Link>
+//           </li>
+//         </ul>
+//       </nav>
 
-      <Suspense fallback={<div>Loading...</div>}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-        </Routes>
-      </Suspense>
-    </Router>
-  );
+//       <Suspense fallback={<div>Loading...</div>}>
+//         <Routes>
+//           <Route path="/" element={<Home />} />
+//           <Route path="/about" element={<About />} />
+//         </Routes>
+//       </Suspense>
+//     </Router>
+//   );
+// }
+
+
+
+
+// Prop Drilling ....................................................................
+// .................................................................................
+
+import { useState } from 'react';
+
+const App = () => {
+  
+  const [count, setCount] = useState(0);
+  
+  return (
+    <div>
+      <Count count={count}/>
+      <Button count={count} setCount={setCount} />
+    </div>
+  )
+};
+
+
+function Count({count}){
+  return <div>
+    {count}
+  </div>
+}
+
+function Button({count, setCount}){
+  return <div>
+    <button onClick={() => {
+      setCount(count + 1)
+    }}>Increase</button>
+    
+    <button onClick={() => {
+      setCount(count - 1)
+    }}>Decrease</button>
+  </div>
+  
 }
 
 export default App;
